@@ -1,5 +1,6 @@
 
 const jwt=require("jsonwebtoken")
+require('dotenv').config()
 
 
 const verifyToken=(req,res,next)=>{
@@ -8,7 +9,7 @@ const verifyToken=(req,res,next)=>{
     if(authHeader){
         const token=authHeader.trim().split(" ")[1]
         // console.log(token)
-        jwt.verify(token,"rishi",(err,user)=>{
+        jwt.verify(token,process.env.JWT_SEC,(err,user)=>{
             if(err) return res.status(403).json("Token is not valid")
             req.user=user;
             next()

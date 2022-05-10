@@ -2,13 +2,13 @@
 const User = require("../models/User");
 const CryptoJS=require("crypto-js")
 const { verifyToken,verifyTokenAuthorization, verifyTokenAndAdmin } = require("./verifyToken");
-
+require('dotenv').config()
 const router=require("express").Router();
 
 // UPDATE USER
 router.put("/:id",verifyTokenAuthorization,async(req,res)=>{
     if(req.body.password){
-        req.body.password=CryptoJS.AES.encrypt(req.body.password, "rishi").toString();
+        req.body.password=CryptoJS.AES.encrypt(req.body.password, process.env.SEC_PASS ).toString();
     }
     try {
         const updatedUser = await User.findByIdAndUpdate(

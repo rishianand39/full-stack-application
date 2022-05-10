@@ -6,7 +6,8 @@ const Container=styled.div`
   display: flex;
   flex-wrap: wrap;
 `
-const Products = () => {
+const Products = ({category,filters,sort}) => {
+  console.log(category,filters,sort)
   return (
     <Container>
       {popularProducts.map(item=>(
