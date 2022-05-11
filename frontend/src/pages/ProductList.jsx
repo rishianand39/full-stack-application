@@ -52,7 +52,6 @@ const ProductList = () => {
   }
 
 
-  
 
   return (
     <Container>
@@ -63,7 +62,7 @@ const ProductList = () => {
         <Filter>
           <FilterText>Filter Products:</FilterText>
           <Select name="color" onChange={(e)=>handleFilter(e)}>
-            <Option disabled defaultValue>
+            <Option disabled defaultValue >
               Color
             </Option>
             <Option>White</Option>

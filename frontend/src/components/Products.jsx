@@ -26,19 +26,19 @@ const Products = ({category,filters,sort}) => {
     getProducts()
   },[category])
 
-  // useEffect(()=>{
-  //   let f=products.filter((item)=>
-  //     Object.entries(filters).every((key,value)=>
-  //     item[key].includes(value)
-  //     )
-  //   )
+  useEffect(()=>{
+    products.filter((item)=>
+      Object.entries(filters).every(([key,value])=>
+      item[key].includes(value)
+      )
+    )
 
-  // },[filters])
-
+  },[filters])
+console.log(products)
 
   return (
     <Container>
-      {popularProducts.map(item=>(
+      {products.map(item=>(
         <Product item={item}/>
       ))}
     </Container>
