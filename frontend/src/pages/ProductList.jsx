@@ -50,7 +50,7 @@ const ProductList = () => {
   const handleSort=(e)=>{
     setSort(e.target.value)
   }
-  console.log(category)
+
 
   
 
