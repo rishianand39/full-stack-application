@@ -37,11 +37,29 @@ const Products = ({category,filters,sort}) => {
       );
   }, [products, category, filters]);
 
-
+  useEffect(()=>{
+    if(sort==="newest"){
+      filteredProducts.sort((a,b)=>
+        a.createdAt-b.createdAt
+      )
+    }
+    else if(sort==="asc"){
+      filteredProducts.sort((a,b)=>
+        a.price-b.price
+      )
+    }
+    else{
+      filteredProducts.sort((a,b)=>
+        b.price-a.price
+      )
+    }
+  },[sort])
 
   return (
     <Container>
-      {filteredProducts.map(item=>(
+      {category? filteredProducts.map(item=>(
+        <Product key={item._id} item={item}/>
+      )) : products.slice(0,4).map(item=>(
         <Product key={item._id} item={item}/>
       ))}
     </Container>

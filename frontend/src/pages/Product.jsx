@@ -6,6 +6,9 @@ import Footer from "../components/Footer"
 import { Remove } from "@mui/icons-material"
 import { Add } from "@mui/icons-material"
 import {mobile} from "../responsive"
+import {useParams} from "react-router-dom"
+import { useEffect, useState } from "react"
+import axios from "axios"
 
 const Container=styled.div`
     
@@ -118,18 +121,32 @@ font-weight: 500;
 
 
 const Product = () => {
+    const [item,setItem]=useState({})
+    const {id}=useParams()
+    useEffect(()=>{
+        const getProduct=async()=>{
+            try {
+                const res=await axios.get(`http://localhost:5000/api/products/find/${id}`)
+                setItem(res.data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        getProduct()
+    },[id])
+
   return (
    <Container>
        <Navbar/>
        <Announcement />
         <Wrapper>
             <ImgContainer>
-                <Image src="https://www.pngarts.com/files/3/Women-Jacket-PNG-High-Quality-Image.png"/>
+                <Image src={item.img}/>
             </ImgContainer>
             <InfoContainer>
-                <Title>Denim Jensiuns</Title>
-                <Desc>Lorem ipsum dolor sit amet consectetur, adipisicing elit. At, provident mollitia aliquid corrupti ad incidunt. Esse doloribus possimus dicta voluptatibus earum itaque soluta, reiciendis quasi nostrum nam, ipsa maiores tenetur?</Desc>
-                <Price>$20</Price>
+                <Title>{item.title}</Title>
+                <Desc>{item.desc}</Desc>
+                <Price>$ {item.price}</Price>
                 <FilterContainer>
                     <Filter>
                         <FilterTitle>Color</FilterTitle>
