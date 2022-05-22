@@ -4,6 +4,7 @@ import Announcement from '../components/Announcement'
 import Footer from "../components/Footer"
 import { Add, Remove } from "@mui/icons-material"
 import {mobile} from "../responsive"
+import { useSelector } from "react-redux"
 
 const Container=styled.div`
     
@@ -153,6 +154,8 @@ const Button=styled.button`
 
 
 const Cart = () => {
+    const {products,quantity,total}=useSelector(store=>store.cart)
+
   return (
     <Container>
         <Navbar />
@@ -162,66 +165,51 @@ const Cart = () => {
             <Top>
                 <TopBottom>CONTINUE SHOPPING</TopBottom>
                 <TopTexts>
-                    <TopText>Shopping Bag(2)</TopText>
+                    <TopText>Shopping Bag({quantity})</TopText>
                     <TopText>Your Wishlist(0)</TopText>
                 </TopTexts>
                 <TopBottom type="filled">CHECKOUT NOW</TopBottom>
             </Top>
             <Bottom>
                 <Info>
+                    {products.map((product)=>
+                    
                     <Product>
                         <ProductDetail>
-                            <Image src="https://assets.myntassets.com/f_webp,dpr_1.5,q_60,w_210,c_limit,fl_progressive/assets/images/17350962/2022/3/9/0a8fd2f3-daca-4861-849d-a18c21fb41bb1646825753269-Puma-Men-Sports-Shoes-8831646825752908-1.jpg"/>
+                            <Image src={product.img}/>
                             <Details>
-                                <ProductName><b>Product:</b> JESSIE THUNDER</ProductName>
-                                <ProductId><b>ID:</b> 123457775</ProductId>
-                                <ProductColor color="black"/>
-                                <ProductSize><b>Size:</b> 37.5</ProductSize>
+                                <ProductName><b>Product : </b> {product.desc}</ProductName>
+                                <ProductId><b>ID : </b> {product._id}</ProductId>
+                                <ProductColor color={product.color}/>
+                                <ProductSize><b>Size:</b> {product.size}</ProductSize>
                             </Details>
                         </ProductDetail>
                         <PriceDetail>
                             <ProductAmountContainer>
                                 <Add />
-                                <ProductAmount>2</ProductAmount>
+                                <ProductAmount>{product.quantity}</ProductAmount>
                                 <Remove />
                             </ProductAmountContainer>
-                            <ProductPrice>$ 30</ProductPrice>
+                            <ProductPrice>$ {product.price*product.quantity}</ProductPrice>
                         </PriceDetail>
                     </Product>
+                    )}
                     <Hr />
-                    <Product>
-                        <ProductDetail>
-                            <Image src="https://assets.myntassets.com/f_webp,dpr_1.5,q_60,w_210,c_limit,fl_progressive/assets/images/17350962/2022/3/9/0a8fd2f3-daca-4861-849d-a18c21fb41bb1646825753269-Puma-Men-Sports-Shoes-8831646825752908-1.jpg"/>
-                            <Details>
-                                <ProductName><b>Product:</b> JESSIE THUNDER</ProductName>
-                                <ProductId><b>ID:</b> 123457775</ProductId>
-                                <ProductColor color="black"/>
-                                <ProductSize><b>Size:</b> 37.5</ProductSize>
-                            </Details>
-                        </ProductDetail>
-                        <PriceDetail>
-                            <ProductAmountContainer>
-                                <Add />
-                                <ProductAmount>2</ProductAmount>
-                                <Remove />
-                            </ProductAmountContainer>
-                            <ProductPrice>$ 30</ProductPrice>
-                        </PriceDetail>
-                    </Product>
+                  
                 </Info>
                 <Summary>
                     <SummaryTitle>ORDER SUMMARY</SummaryTitle>
                     <SummaryItem>
                         <SummaryItemText>Subtotal</SummaryItemText>
-                        <SummaryItemPrice>$80</SummaryItemPrice>
+                        <SummaryItemPrice>$ {total}</SummaryItemPrice>
                     </SummaryItem>
                     <SummaryItem>
                         <SummaryItemText>Estimated Shipping</SummaryItemText>
-                        <SummaryItemPrice>$3.5</SummaryItemPrice>
+                        <SummaryItemPrice>$ 3.5</SummaryItemPrice>
                     </SummaryItem>
                     <SummaryItem type="total">
                         <SummaryItemText>Total</SummaryItemText>
-                        <SummaryItemPrice>$80</SummaryItemPrice>
+                        <SummaryItemPrice>$ {total+ 3.5}</SummaryItemPrice>
                     </SummaryItem>
                     <Button>CHECKOUT NOW</Button>
                 </Summary>
