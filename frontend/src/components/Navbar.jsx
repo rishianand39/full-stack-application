@@ -4,6 +4,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import Badge from "@mui/material/Badge";
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import {mobile} from "../responsive"
+import {Link} from "react-router-dom"
+import {useSelector} from "react-redux"
 
 const Container = styled.div`
   height: 60px;
@@ -59,6 +61,8 @@ ${mobile({fontSize:"14px",marginLeft:"10px"})}
 `;
 
 const Navbar = () => {
+  const quantity =useSelector(state=>state.cart.quantity)
+
   return (
     <Container>
       <Wrapper>
@@ -75,11 +79,13 @@ const Navbar = () => {
         <Right>
           <MenuItem>REGISTER</MenuItem>
           <MenuItem>SIGN IN</MenuItem>
+          <Link to="/carts">
           <MenuItem>
-            <Badge badgeContent={4} color="primary">
+            <Badge badgeContent={quantity} color="primary">
               <ShoppingCartOutlinedIcon color="action" />
             </Badge>
           </MenuItem>
+          </Link>
         </Right>
       </Wrapper>
     </Container>
