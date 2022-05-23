@@ -46,7 +46,7 @@ router.delete("/:id",verifyTokenAndAdmin,async(req,res)=>{
     }
 });
 
-// GET PRODUCT
+// GET PRODUCTstripeToken
 router.get("/find/:id",async(req,res)=>{
     try {
         const product= await Product.findById(req.params.id);

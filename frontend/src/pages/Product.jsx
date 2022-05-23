@@ -155,7 +155,6 @@ const Product = () => {
 
     }
 
-console.log(size)
 
   return (
    <Container>

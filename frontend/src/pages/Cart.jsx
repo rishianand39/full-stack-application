@@ -5,6 +5,12 @@ import Footer from "../components/Footer"
 import { Add, Remove } from "@mui/icons-material"
 import {mobile} from "../responsive"
 import { useSelector } from "react-redux"
+import StripeCheckout from "react-stripe-checkout"
+import { useEffect, useState } from "react"
+import axios from "axios"
+import { useNavigate } from "react-router-dom"
+const KEY =process.env.REACT_APP_STRIPE;
+
 
 const Container=styled.div`
     
@@ -155,7 +161,27 @@ const Button=styled.button`
 
 const Cart = () => {
     const {products,quantity,total}=useSelector(store=>store.cart)
+    const [stripetoken,setStripeToken]=useState()
+    const navigate=useNavigate()
+    const onToken=(token)=>{
+        setStripeToken(token)
+    }
+   useEffect(()=>{
+    const makeRequest=async()=>{
+        try {
+            const res=await axios.post("http://localhost:5000/api/checkout/payment",{
+                tokenId:stripetoken.id,
+                amount:total*100,
+            })
+            navigate("/")
 
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    stripetoken && makeRequest()
+
+   },[stripetoken])
   return (
     <Container>
         <Navbar />
@@ -174,7 +200,7 @@ const Cart = () => {
                 <Info>
                     {products.map((product)=>
                     
-                    <Product>
+                    <Product key={product._id}>
                         <ProductDetail>
                             <Image src={product.img}/>
                             <Details>
@@ -211,7 +237,19 @@ const Cart = () => {
                         <SummaryItemText>Total</SummaryItemText>
                         <SummaryItemPrice>$ {total+ 3.5}</SummaryItemPrice>
                     </SummaryItem>
+                    <StripeCheckout
+                    name="Rishi Shop"
+                    image="https://avatars.githubusercontent.com/u/97423069?v=4"
+                    billingAddress
+                    shippingAddress
+                    description={`Your total is $ ${total+3.5}`}
+                    amount={total*100}
+                    token={onToken}
+                    stripeKey={KEY}
+                    >
+                        
                     <Button>CHECKOUT NOW</Button>
+                    </StripeCheckout>
                 </Summary>
             </Bottom>
         </Wrapper>
