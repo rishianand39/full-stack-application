@@ -18,6 +18,22 @@ app.use("/api/products",productRoute);
 app.use("/api/orders",orderRoute);
 app.use("/api/checkout", stripeRoute);
 
+app.get("/",(req,res)=>{
+    return res.status(200).send("Full Stack Web Application")
+})
+
+const connect=require("./configs/db");
+const res = require("express/lib/response");
 
 
-module.exports=app
+
+const port=process.env.PORT || 6000
+app.listen(port,async()=>{
+    try {
+        await connect();
+        console.log(`Listening on port ${port}`)
+    } catch (error) {
+        console.log({"error":error.message})
+    }
+});
+
