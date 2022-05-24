@@ -89,7 +89,7 @@ return (
       <Desc>
         There are many variations of passages of Lorem Ipsum available, but
         the majority have suffered alteration in some form, by injected
-        humour, or randomised words which don’t look even slightly believable.
+        humour, or randomised words which don't look even slightly believable.
       </Desc>
       <SocialContainer>
         <SocialIcon color="3B5999">
@@ -130,7 +130,7 @@ return (
         <PhoneIcon style={{marginRight:"10px"}}/> +1 234 56 78
       </ContactItem>
       <ContactItem>
-        <MailOutlineIcon style={{marginRight:"10px"}} /> contact@lama.dev
+        <MailOutlineIcon style={{marginRight:"10px"}} /> contact@ rishi.rn818@gmail.com
       </ContactItem>
       <Payment src="https://i.ibb.co/Qfvn4z6/payment.png" />
     </Right>

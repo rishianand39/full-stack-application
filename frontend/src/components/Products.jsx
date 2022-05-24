@@ -16,7 +16,7 @@ const Products = ({category,filters,sort}) => {
   useEffect(()=>{
     const getProducts=async()=>{
       try {
-        const result=await axios.get(category?`http://localhost:5000/api/products?category=${category}`:`http://localhost:5000/api/products`)
+        const result=await axios.get(category?`https://fullstackrishiapp.herokuapp.com/api/products?category=${category}`:`https://fullstackrishiapp.herokuapp.com/api/products`)
         setProducts(result.data)
         
       } catch (error) {

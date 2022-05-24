@@ -169,7 +169,7 @@ const Cart = () => {
    useEffect(()=>{
     const makeRequest=async()=>{
         try {
-            const res=await axios.post("http://localhost:5000/api/checkout/payment",{
+            const res=await axios.post("https://fullstackrishiapp.herokuapp.com/api/checkout/payment",{
                 tokenId:stripetoken.id,
                 amount:total*100,
             })
@@ -199,7 +199,7 @@ const Cart = () => {
             <Bottom>
                 <Info>
                     {products.map((product)=>
-                    
+                    <>
                     <Product key={product._id}>
                         <ProductDetail>
                             <Image src={product.img}/>
@@ -219,8 +219,10 @@ const Cart = () => {
                             <ProductPrice>$ {product.price*product.quantity}</ProductPrice>
                         </PriceDetail>
                     </Product>
-                    )}
                     <Hr />
+                    </>
+                    
+                    )}
                   
                 </Info>
                 <Summary>
