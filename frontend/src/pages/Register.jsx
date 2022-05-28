@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import {mobile} from "../responsive"
-
+import {useState} from "react"
+import axios from "axios"
+import {Navigate} from "react-router-dom"
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -56,25 +58,63 @@ const Button = styled.button`
   background-color: teal;
   color: white;
   cursor: pointer;
+  &:disabled{
+    cursor: not-allowed;
+    background-color: grey;
+  }
 `;
 
+const Error=styled.span`
+  color:red;
+  margin:8px;
+`
+
+
 const Register = () => {
+  const [user,setUser]=useState({
+    "username":"",
+    "email":"",
+    "password":"",
+  })
+  const [loading,setLoading]=useState(false)
+  const [error,setError]=useState(false)
+  const [success,setSuccess]=useState(false)
+  const handleClick=(e)=>{
+    
+    setUser({
+      ...user,
+     [e.target.name]:e.target.value
+    })
+  }
+
+  const handleSubmit=async(e)=>{
+    e.preventDefault()
+    setLoading(true)
+   try {
+     await axios.post("https://fullstackrishiapp.herokuapp.com/api/auth/register",user)
+    setError(false)
+    setLoading(false)
+   } catch (error) {
+     setLoading(false)
+     setError(true)
+   }
+  }
+  {success && <Navigate to="/login" />}
+
   return (
     <Container>
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>
-        <Form>
-          <Input placeholder="name" />
-          <Input placeholder="last name" />
-          <Input placeholder="username" />
-          <Input placeholder="email" />
-          <Input placeholder="password" />
-          <Input placeholder="confirm password" />
+        <Form>   
+          <Input onChange={handleClick}  name="username" placeholder="username" type="text"/>
+          <Input onChange={handleClick}  name="email" placeholder="email" type="email" />
+          <Input onChange={handleClick}  name="password" placeholder="password" type="password" />
           <Agreement>
             By creating an account, I consent to the processing of my personal
             data in accordance with the <b>PRIVACY POLICY</b>
           </Agreement>
-          <Button>CREATE</Button>
+          <Button onClick={handleSubmit} disabled={loading}>CREATE</Button>
+          {error && <Error>Something Went Wrong....</Error>}
         </Form>
       </Wrapper>
     </Container>

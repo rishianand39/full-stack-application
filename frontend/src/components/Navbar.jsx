@@ -4,7 +4,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import Badge from "@mui/material/Badge";
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import {mobile} from "../responsive"
-import {Link} from "react-router-dom"
+import {Link, Navigate} from "react-router-dom"
 import {useSelector} from "react-redux"
 
 const Container = styled.div`
@@ -53,15 +53,25 @@ const Input = styled.input`
 const Logo = styled.div`
   flex: 1;
   font-weight: bolder;
+  text-decoration: none;
 `;
+
+
 
 const MenuItem = styled.div`
 margin-left: 25px;
+cursor:pointer;
 ${mobile({fontSize:"14px",marginLeft:"10px"})}
 `;
 
+const linkStyle={
+  textDecoration:"none",
+  color: "black"
+}
 const Navbar = () => {
   const quantity =useSelector(state=>state.cart.quantity)
+
+
 
   return (
     <Container>
@@ -74,11 +84,17 @@ const Navbar = () => {
           </SearchContainer>
         </Left>
         <Center>
+          <Link style={linkStyle} to="/">
           <Logo>RISHI.</Logo>
+          </Link>
         </Center>
         <Right>
+          <Link style={linkStyle} to="/register">
           <MenuItem>REGISTER</MenuItem>
+          </Link>
+          <Link style={linkStyle} to="/login">
           <MenuItem>SIGN IN</MenuItem>
+          </Link>
           <Link to="/carts">
           <MenuItem>
             <Badge badgeContent={quantity} color="primary">
