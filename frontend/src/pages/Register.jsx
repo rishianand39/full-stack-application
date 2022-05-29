@@ -2,7 +2,7 @@ import styled from "styled-components";
 import {mobile} from "../responsive"
 import {useState} from "react"
 import axios from "axios"
-import {Navigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -71,6 +71,7 @@ const Error=styled.span`
 
 
 const Register = () => {
+  const navigate=useNavigate()
   const [user,setUser]=useState({
     "username":"",
     "email":"",
@@ -78,7 +79,6 @@ const Register = () => {
   })
   const [loading,setLoading]=useState(false)
   const [error,setError]=useState(false)
-  const [success,setSuccess]=useState(false)
   const handleClick=(e)=>{
     
     setUser({
@@ -91,15 +91,17 @@ const Register = () => {
     e.preventDefault()
     setLoading(true)
    try {
-     await axios.post("https://fullstackrishiapp.herokuapp.com/api/auth/register",user)
-    setError(false)
-    setLoading(false)
+     await axios.post("https://fullstackapprishi.herokuapp.com/api/auth/register",user)
+    setError(false);
+    setLoading(false);
+    navigate("/login")
    } catch (error) {
      setLoading(false)
      setError(true)
+
    }
   }
-  {success && <Navigate to="/login" />}
+
 
   return (
     <Container>

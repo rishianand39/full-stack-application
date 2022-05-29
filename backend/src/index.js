@@ -23,7 +23,7 @@ app.get("/",(req,res)=>{
 })
 
 const connect=require("./configs/db");
-const res = require("express/lib/response");
+// const res = require("express/lib/response");
 
 
 

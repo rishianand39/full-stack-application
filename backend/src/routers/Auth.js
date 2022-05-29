@@ -9,16 +9,16 @@ require('dotenv').config()
 //Router
 
 router.post("/register",async(req,res)=>{
-    const newUser=new User({
-        username:req.body.username,
-        email:req.body.email,
-        password:CryptoJS.AES.encrypt(req.body.password, process.env.SEC_PASS).toString(),
-    })
     try {
+        const newUser=new User({
+            username:req.body.username,
+            email:req.body.email,
+            password:CryptoJS.AES.encrypt(req.body.password, "rishi").toString(),
+        })
         const savedUser=await newUser.save();
-        res.status(200).json(savedUser)
+       return res.status(200).json(savedUser)
     } catch (error) {
-        res.status(500).json(error)
+      return  res.status(500).json(error)
     }
 })
 

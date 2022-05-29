@@ -146,7 +146,7 @@ const Cart = () => {
     const makeRequest = async () => {
       try {
          await axios.post(
-          "https://fullstackrishiapp.herokuapp.com/api/checkout/payment",
+          "https://fullstackapprishi.herokuapp.com/api/checkout/payment",
           {
             tokenId: stripetoken.id,
             amount: total * 100,
