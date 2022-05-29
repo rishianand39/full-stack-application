@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const KEY = process.env.REACT_APP_STRIPE;
 
 const Container = styled.div``;
@@ -145,7 +145,7 @@ const Cart = () => {
   useEffect(() => {
     const makeRequest = async () => {
       try {
-         await axios.post(
+        await axios.post(
           "https://fullstackapprishi.herokuapp.com/api/checkout/payment",
           {
             tokenId: stripetoken.id,
@@ -166,46 +166,56 @@ const Cart = () => {
       <Wrapper>
         <Title>YOUR BAG</Title>
         <Top>
-          <TopBottom>CONTINUE SHOPPING</TopBottom>
+          <Link to="/">
+            <TopBottom>CONTINUE SHOPPING</TopBottom>
+          </Link>
           <TopTexts>
             <TopText>Shopping Bag({quantity})</TopText>
             <TopText>Your Wishlist(0)</TopText>
           </TopTexts>
-          <TopBottom type="filled">CHECKOUT NOW</TopBottom>
+          <StripeCheckout
+            name="Rishi Shop"
+            image="https://avatars.githubusercontent.com/u/97423069?v=4"
+            billingAddress
+            shippingAddress
+            description={`Your total is $ ${total + 3.5}`}
+            amount={total * 100}
+            token={onToken}
+            stripeKey={KEY}
+          >
+            <TopBottom type="filled">CHECKOUT NOW</TopBottom>
+          </StripeCheckout>
         </Top>
         <Bottom>
           <Info>
             {products.map((product) => (
-              
-                <Product key={product._id}>
-                  <ProductDetail>
-                    <Image src={product.img} />
-                    <Details>
-                      <ProductName>
-                        <b>Product : </b> {product.desc}
-                      </ProductName>
-                      <ProductId>
-                        <b>ID : </b> {product._id}
-                      </ProductId>
-                      <ProductColor color={product.color} />
-                      <ProductSize>
-                        <b>Size:</b> {product.size}
-                      </ProductSize>
-                    </Details>
-                  </ProductDetail>
-                  <PriceDetail>
-                    <ProductAmountContainer>
-                      <Add />
-                      <ProductAmount>{product.quantity}</ProductAmount>
-                      <Remove />
-                    </ProductAmountContainer>
-                    <ProductPrice>
-                      $ {product.price * product.quantity}
-                    </ProductPrice>
-                  </PriceDetail>
-             
-                </Product>
-             
+              <Product key={product._id}>
+                <ProductDetail>
+                  <Image src={product.img} />
+                  <Details>
+                    <ProductName>
+                      <b>Product : </b> {product.desc}
+                    </ProductName>
+                    <ProductId>
+                      <b>ID : </b> {product._id}
+                    </ProductId>
+                    <ProductColor color={product.color} />
+                    <ProductSize>
+                      <b>Size:</b> {product.size}
+                    </ProductSize>
+                  </Details>
+                </ProductDetail>
+                <PriceDetail>
+                  <ProductAmountContainer>
+                    <Add />
+                    <ProductAmount>{product.quantity}</ProductAmount>
+                    <Remove />
+                  </ProductAmountContainer>
+                  <ProductPrice>
+                    $ {product.price * product.quantity}
+                  </ProductPrice>
+                </PriceDetail>
+              </Product>
             ))}
           </Info>
           <Summary>
